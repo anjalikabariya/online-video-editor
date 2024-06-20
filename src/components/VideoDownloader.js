@@ -3,14 +3,14 @@ const VideoDownloader = ({ url, filename }) => {
         fetch(url)
             .then((response) => response.blob())
             .then((blob) => {
-                const url = window.URL.createObjectURL(new Blob([blob]));
+                const downloadUrl = window.URL.createObjectURL(blob);
                 const link = document.createElement('a');
-                link.href = url;
-                link.filename = filename || 'edited-video.mp4';
+                link.href = downloadUrl;
+                link.download = filename || 'edited-video.mp4';
                 document.body.appendChild(link);
                 link.click();
                 document.body.removeChild(link);
-                window.URL.revokeObjectURL(url);
+                window.URL.revokeObjectURL(downloadUrl);
             })
             .catch((error) => {
                 console.error("Error fetching the file:", error);
@@ -18,8 +18,8 @@ const VideoDownloader = ({ url, filename }) => {
     }
 
     return(
-        <div>
-            <button onClick={handleDownload}>Download</button>
+        <div className="my-2 flex">
+            <button onClick={handleDownload} className="btn-primary">Download</button>
         </div>
     )
 }

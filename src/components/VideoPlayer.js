@@ -1,12 +1,23 @@
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 
 const VideoPlayer = ({ src }) => {
-    const videoref = useRef(null)
-    return(
-        <div>
-            {src ? (<video ref={videoref} controls src={src}></video>) : (<p>Upload Video</p>)}
-        </div>
-    )
-}
+    const videoRef = useRef(null);
 
-export default VideoPlayer
+    if (!src) {
+        return <div>No video source provided.</div>;
+    }
+
+    return (
+        <div>
+            <video
+                width="1920"
+                height="1080"
+                src={src}
+                controls
+                ref={videoRef}
+            />
+        </div>
+    );
+};
+
+export default VideoPlayer;
